@@ -1,0 +1,685 @@
+\documentclass[11pt]{amsart}
+%\usepackage{pstricks,pst-plot}
+\usepackage{cancel}
+\usepackage{tikz}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{non}[theorem]{Nonsense}
+\newtheorem{observation}[theorem]{Observation}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{xca}[theorem]{Exercise}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{nremark}[theorem]{Bemerkning}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{improvement}[theorem]{Improvement}
+\newtheorem{discus}[theorem]{Discus}
+\newtheorem{ptheorem}[theorem]{Possible Theorem}
+\newtheorem{project}[theorem]{Project}
+
+\newcommand\hra{\hookrightarrow}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cW}{\mathcal{W}}
+
+\newcommand{\dy}{\mbox{d}y}
+\newcommand{\dt}{\mbox{d}t}
+\newcommand{\ds}{\mbox{d}s}
+
+
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\B}{\mathbb{B}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\D}{\mathbb{D}}
+\renewcommand{\H}{\mathbb{H}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\U}{\mathbb{U}}
+\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bD}{\mathbb{D}}
+
+\newcommand\Subset{\subset\subset}
+\newcommand\wt{\widetilde}
+\newcommand\ddt{\frac{d}{dt}}
+
+
+\newcommand{\Aut}{\mathop{{\rm Aut}}}
+\newcommand{\seq}[1]{\{#1\}_{n\in\N}}
+
+\def\di{\partial}
+\def\bs{\backslash}
+\def\e{\epsilon}
+
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+\numberwithin{equation}{section}
+
+
+%
+%
+%  THE DOCUMENT
+%
+%
+
+\begin{document}
+\title{Mandatory assignment - MAT-INF4300}
+%\subjclass[Mat-inf4130 2015]{}
+\author{Johan Åmdal Eliassen}
+
+\maketitle
+
+\date{\today}
+%\keywords{}
+\section{Problem 1}
+\subsection*{a}
+Assume $u \in C^3(\R^n \times (0,\infty))$ solves $u_t - \Delta u = 0$.
+
+Let $u_\lambda(x,t) = u(\lambda x, \lambda^2 t)$, $\lambda \in \R$.
+
+\newcommand{\ul}{u_\lambda}
+Then $(\ul)_t(x,t) = \lambda^2 u_t(\lambda x, \lambda^2 x)$, and $(\ul)_{x_i, x_i}(x, t) = \lambda^2 u_{x_i,x_i}(\lambda x, \lambda^2 t)$, and so 
+\begin{equation}
+((\ul)_t - \Delta \ul)(x,t) = \lambda^2 (u_t(\lambda x, \lambda^2 t) - \Delta u(\lambda x, \lambda^2 t)) = 0\,.
+\end{equation}
+\qed
+
+\subsection*{b} Let $v(x,t) = x \cdot Du(x,t) + 2tu_t(x,t)$.
+
+(I am assuming now that $u$ is three times continuously differentiable, not just two).
+
+Differentiating $(x, t, \lambda) \mapsto u_\lambda(x, t)$ with regards to $\lambda$ gives $x \cdot Du(\lambda x, \lambda^2 t) + 2t\lambda u(\lambda x, \lambda^2 t) =: w(x,t,\lambda)$; we then have $v(x, t) = w(x, t, 1)$. 
+
+Since $(x,t,\lambda) \mapsto u_\lambda(x,t)$ solves the heat equation for all $\lambda \in \R$, so does $w(x,t,\lambda)$ for all $\lambda \in \R$, and in particular, for $\lambda = 1$. Thus $v$ solves the heat equation.
+
+Slightly more written out, continuity of the derivatives of $u_\lambda$ allows us to interchange the order of differentiation, and so,
+\begin{equation}
+v_t - \Delta v
+=
+\left.\left(
+ \left(\frac{\partial u_\lambda}{\partial \lambda}
+\right)_t 
+- \Delta \left(
+\frac{\partial u_\lambda}{\partial \lambda}
+\right)\right)\right|_{\lambda = 1}
+= \left.
+\frac{\partial}{\partial \lambda}
+\left(
+(u_\lambda)_t - \Delta u_\lambda
+\right)\right|_{\lambda = 1} = 0\,.
+\end{equation}
+ \qed
+ 
+\subsection*{c}Let $\eta: \R \to \R$ be convex and twice continuously differentiable, let $u$ solve the heat equation, and set $v(x,t) := \eta(u)$. Then
+\begin{align}
+v_t &= \frac{\partial u}{\partial t}\eta'(u) = u_t \eta'(u)\,,\\
+v_{x_i} &= \frac{\partial u}{\partial x_i}\eta'(u) = u_{x_i} \eta'(u)\,,\\
+v_{x_i x_i} &=
+u_{x_i}^2 \eta''(u) + u_{x_i x_i} \eta'(u)\,.
+\end{align}
+Hence $v_t - \Delta v = \eta'(u)(u_t - \Delta u) - \eta''(u)|Du|^2 = -\eta''(u)|Du|^2 \leq 0$ because $\eta''(u) \geq 0$. \qed
+
+\section{Problem 2}
+Problem:
+\begin{equation} \tag{*}\label{prob2}
+\left\{
+\begin{array}{cc}
+u_t - \Delta u + cu = f\,, & (x,t) \in \R^n\times(0,\infty) \,, \\
+u(x,0) = u_0(x)\,, & x\in\R^n\,,
+\end{array}
+\right.
+\end{equation}
+for $c \in \R$, $f \in C_c^{2,1}(\R^n \times [0,\infty))$, $u_0 \in C_c(\R^n)$.
+
+\subsection*{a}
+Assume there exists a $v$ satisfying
+\begin{equation}\tag{**}\label{prob2mod}
+\left\{
+\begin{array}{cc}
+v_t - \Delta v = e^{ct}f\,, & (x,t) \in \R^n\times(0,\infty) \,, \\
+v(x,0) = u_0(x)\,, & x\in\R^n\,,
+\end{array}
+\right.
+\end{equation}
+Then for $w := e^{-ct}v$ we have
+\begin{align} \label{c2}
+w_t &= e^{-ct}(-cv + v_t)\,, \\
+\label{c21}
+\Delta w &= e^{-ct}\Delta v\,.
+\end{align}
+And so
+\begin{equation}
+w_t - \Delta w + cw
+=
+e^{-ct}(-cv + v_t - \Delta v + c v)
+=e^{-ct}(v_t - \Delta v) = f\,,
+\end{equation}
+so $w$ satisfies the first half of \eqref{prob2}.
+
+A solution of \eqref{prob2mod} is 
+\begin{equation}
+v(x,t) = \int_{\R^n}\!\!\!\!
+\Phi(x - y,t) u_0(x)
+\:\dy 
++ 
+\int_0^t\!\! \int_{\R^n}\!\!\!\!
+ \Phi(x - y, t - s)e^{cs}f(y, s) \:\ds\,.
+\end{equation}
+This is valid because $f$ and $u_0$ have compact support.
+
+Hence, an explicit formula for $u$ satisfying \eqref{prob2} is
+\begin{equation}
+u(x,t) = e^{-ct}\left(
+\int_{\R^n}\!\!\!\!
+\Phi(x-  y,t) u_0(x)
+\:\dy 
++ 
+\int_0^t\!\! \int_{\R^n}\!\!\!\!
+ \Phi(x - y, t - s)e^{cs}f(y, s) \:\ds\
+\right) 
+\,.
+\end{equation}
+It remains to verify:
+\begin{enumerate}
+\item that $u$ really is in $C^{2,1}(\R^n \times(0,\infty)$,
+\item that $u$ really does satisfy $u_t - \Delta u + cu = f$, and
+\item that $u(x,t) \to u_0(x_0)$ whenever $(x,t) \to (x_0,0)$.
+\end{enumerate}
+
+\subsubsection*{(1)}
+Since $v \in C^{2,1}(\R^n \times (0,\infty))$ and $u$ is a product of a smooth function with $v$, it follows that $u$ is also a member of $C^{2,1}(\R^n \times (0,\infty))$.
+
+\subsubsection*{(2)}
+Write $u$ as 
+\begin{align*}
+u(x,t) &= e^{-ct}\left(
+\int_{\R^n}\!\!\!\!
+\Phi(x-  y,t) u_0(x)
+\:\dy 
++ 
+\int_0^t\!\! \int_{\R^n}\!\!\!\!
+ \Phi(x - y, t - s)e^{cs}f(y, s) \:\ds\
+\right) \\
+&=: e^{-ct}(I(x,t) + J(x,t))\,.
+\end{align*}
+Then, from Theorem 1 on pp. 47 in Evans, $I$ satisfies the homogenous heat equation; additionally, $I(x,t) \to u_0(x_0)$ as $x \to x_0$, $t \downarrow 0$ for $x_0 \in \R^n$.
+
+Likewise, from Theorem 2 on pp. 50 in Evans, $J$ satisfies $J_t - \Delta J = e^{ct}f$. Additionally, $J(x,t) \to 0$ as $x \to x_0$, $t \downarrow 0$ for $x_0 \in \R^n$.
+
+I omit any direct verification, as the calculations involved would necessarily just mirror those in the book.
+
+Hence, we confirm
+\begin{align*}
+u_t &= e^{-ct}(-c(I + J) + (I_t + J_t)) \,,\\
+\Delta u &= e^{-ct}(\Delta I + \Delta J) \,,\\
+u_t - \Delta u + c u
+&=
+e^{-ct}(
+-c(I+J) + (I_t - \Delta I) + (J_t - \Delta J) + c(I+J)
+)
+= f\,.
+\end{align*}
+\qed
+\subsubsection*{(3)}
+Again writing $u = e^{-ct}(I + J)$, for any $\epsilon > 0$, we may pick $(x,t)$ with $t > 0$ s.t. $|I(x,t)| < \epsilon/3$ and $|J(x,t) - u_0(x)| < \epsilon/3$ and finally so that $1 - e^{-ct} < \epsilon/3/(|u_0(x_0)| + \epsilon/3)$.
+\begin{align*}
+|u(x,t) - u_0(x)|
+&= 
+|e^{-ct}I(x,t) + (e^{-ct}J(x,t) - u_0(x_0)| \\
+&\leq |e^{-ct}I(x,t) - u_0(x_0)|
++ e^{-ct}|J(x,t)|\,.
+\end{align*}
+Since $e^{-ct} = 1 - \delta$ for some $\delta > 0$, this can be written
+\begin{align*}
+(\cdots) &=
+|(1-\delta)I(x,t) - u_0(x_0)| + e^{-ct}|J(x,t)| \\
+&\leq
+|I(x,t) - u_0(x_0)| + \delta|I(x,t)| + |J(x,t)|\,.
+\end{align*}
+Now by choice of $(x,t)$, $\delta = 1 - e^{-ct} < \epsilon/3/(|u_0(x_0)| + \epsilon/3)$, and $|I(x,t)| < |u_0(x,t)| + \epsilon/3)$.
+Thus, finally,
+\begin{align*}
+&< \epsilon/3
++ \delta
+(|u_0(x_0)| + \epsilon/3) 
++ \epsilon/3
+< \epsilon/3  + \epsilon/3 + \epsilon/3 = \epsilon\,.
+\end{align*} \qed
+
+\subsection*{b}
+\textbf{Note}
+I failed to get the energy bound that was asked for, but I stand by my computations, and the result I got is more than sufficient.
+\\
+
+\newcommand{\dx}{\mbox{d}x}
+Assume $f \equiv 0$, and that $u \to 0$ as $x \to \infty$. Now proceeding in the reverse direction, let $v := e^{ct}u$. Then as seen, $v$ satisfies the homogenous heat equation, and so it is smooth; hence $u$ is also smooth, and we can differentiate under the integral.
+
+Define the energy $E(t)$ by
+\begin{equation}
+E(t) = ||u(\cdot, t)||_{L^2(\R^n)} = \int_{\R^n}\!\!\!\!
+u(x,t)^2\:\dx\,.
+\end{equation}
+Then 
+\begin{equation}
+E'(t) =
+\int_{\R^n}\!\!\!\!
+2u u_t \:\dx
+=
+\int_{\R^n}\!\!\!\!
+-2cu^2\:\dx  +
+\int_{\R^n}\!\!\!\!  u\Delta t
+\:\dx\,,
+\end{equation}
+whence, integrating the last term by parts, we otbain
+\begin{equation}
+(...) = 
+\int_{\R^n}\!\!\!\!
+-2cu^2\:\dx
+- \int_{\R^n}\!\!\!\!
+|Du|^2\:\dx\
+= -2cE(t) - \int_{\R^n}\!\!\!\!
+|Du|^2\:\dx\ \leq -2cE(t)\,.
+\end{equation}
+This implies that 
+$
+2cE(t) + E'(t) \leq 0\,,
+$
+and so, by Grönwall's inequality, $E(t) \leq e^{-2ct}E(0) = e^{-2ct}||u_0||_{L^2(\R^n)}$.
+
+Assuming we have two solutions $u_1, u_2$ of \eqref{prob2} satisfying $u \to 0$ as $|x| \to \infty$, we let $w := u_1 - u_2$, $E_w := ||w||_{L^2(\R^n)}$.
+Then $w$ satisfies
+\begin{equation}
+\left\{
+\begin{array}{cc}
+w(x,t) = 0\,, &(x,t)\in\R^n\times(0,\infty)\,, \\
+w(x,0) = 0\,, &x\in\R^n\,.
+\end{array}
+\right.
+\end{equation}
+
+As has been shown, this implies $0 \leq E_w(t) \leq e^{-2ct}E_w(0) = 0$, so $w \equiv 0$; hence $u_1 \equiv u_2$, as was to be shown.
+
+\section{Problem 3}
+\begin{equation}\tag{***}\label{problem3}
+\left\{
+\begin{array}{cc}
+u_t - \Delta u = -u^3\,, &(x,t) \in \Omega \times (0,\infty)\,,\\
+u(x,) = u_0(x)\,, & x\in\R^n\,, \\
+u(x,t) = 0\,, & (x,t) \in \partial \Omega \times (0,\infty)\,.
+\end{array}
+\right.
+\end{equation}
+with $\Omega \subset \R^n$ is open and bounded, $u_0$ continuous.
+
+Assume there exists a twice continuously differentiable $u$ satisfying \eqref{problem3}.
+Then as before, let
+\begin{equation}
+E(t) := 
+||u(\cdot, t)||_{L^2(\Omega)}
+=
+\int_\Omega\!\!\!
+u^2
+\:\dx\,.
+\end{equation}
+Justifying that I can differentiate under the integral sign is a bit finicky: let $v := u^2$ for simplicity of notation. Then $v_t$ exists on $\Omega$ and is bounded wrt $x$, $||v_t(\cdot, t)||_{L^\infty(\Omega)} < \infty$. Fix $t \in (0,\infty)$, and $\epsilon > 0$ s.t. $t-\epsilon > 0$. Let $M = ||v||_{L^{\infty}(\Omega \times (t-\epsilon, t+\epsilon)} < \infty$. Then the function $g(x) = M$ is summable, and dominates $v$ for all $(x,t) \in\Omega\times(t-\epsilon, t+\epsilon)$.
+
+Take some sequence $\{t_n\}_{n\in\N}$ s.t. $t_n \to t$ and $|t_n - t| < \epsilon$. Then for $n\in\N$, by the mean value theorem,
+\begin{equation}
+\frac{v(x, t_n) - v(x,t)}{t_n - t} = \frac{\partial v(x, \zeta_n)}{\partial t} \leq M\,,
+\end{equation}
+for some $\zeta_n \in (t_n, t)$.
+
+Thus the sequence of functions $\{w_n\}_{n\in\N} := \frac{v(x,t_n) - v(x,t)}{t_n - t}$ is dominated by the summable function $g(x)$, and so by the Dominated Convergence Theorem,
+\begin{equation}
+\lim_{n\to\infty}\int_\Omega w_n(x,t)\dx = \int_\Omega
+\lim_{n\to\infty} w_n(x,t)\dx
+= \int_\Omega v_t(x,t)\dx\,.
+\end{equation}
+Since this holds for any such sequence, for any $t\in(0,\infty)$, we are free to differentiate $v = u^2$ under the integral sign.
+\\
+Phew. Now, let's finally do that.
+\begin{equation}
+E'(t) = 
+\int_\Omega\!\!
+2u u_t
+\:\dx
+= 
+\int_\Omega\!\!
+2u(\Delta u - u^3)
+\:\dx\
+=
+\int_\Omega\!\!
+2u\Delta u 
+\:\dx
+-
+\int_\Omega\!\!
+2u^4
+\:\dx\
+\,.
+\end{equation}
+Now integrate the first by parts and use that $u \equiv 0$ on $\partial \Omega$ to obtain
+\begin{equation}
+(\cdots) =
+-\int_\Omega\!\!
+|Du|^2 + 2u^4
+\:\dx\ \leq 0,.
+\end{equation}
+Hence $E(t)$ is a nonincreasing function, and so $E(t) \leq E(0) = ||u_0||_{L^2(\Omega)}$.\qed
+
+\section{Problem 4}
+Let $\Omega \subset \R^n$ be bounded and open. Then the task is to show that the Hölder space $C^{0,\gamma}(\Omega)$ with exponent $\gamma \in [0,1)$ is a Banach space.
+\\
+\newcommand{\cnorm}[1]{||#1||_{C^(\overline{\Omega})}}
+\newcommand{\hnorm}[1]{||#1||_{C^{0,\gamma}(\overline{\Omega})}}
+\newcommand{\hsnorm}[1]{[#1]_{C^{0,\gamma}(\overline{\Omega})}}
+
+The space is equipped with the norm $\hnorm{\cdot}$ given by
+\begin{equation}
+\hnorm{\cdot} = \cnorm{\cdot} + \hsnorm{\cdot}\,.
+\end{equation}
+
+First, I verify that the $\gamma$'th Hölder seminorm is indeed a seminorm--then it follows that the $\gamma'th$ Hölder norm is a norm.
+
+The two properties
+
+$\hsnorm{u} \geq 0$ 
+and
+$\hsnorm{\lambda u} = |\lambda| \hsnorm{u}$ are trivial.
+
+For the triangle inequality, we have
+\begin{equation}
+\hsnorm{u+v}
+= 
+\sup_{
+\substack{
+x,y\in\overline{\Omega}\\
+x\neq y
+}
+}
+\left\{\left|
+\frac{u(x) - u(y)}{|x-y|^\gamma}
++
+\frac{v(x) - v(y)}{|x-y|^\gamma}
+\right|\right\}\,,
+\end{equation}
+but since 
+\begin{equation}
+\left|\frac{u(x) - u(y)}{|x-y|^\gamma}
++
+\frac{v(x) - v(y)}{|x-y|^\gamma}\right|
+\leq
+\frac{|u(x) - u(y)|}{|x-y|^\gamma}
++
+\frac{|v(x) - v(y)|}{|x-y|^\gamma}
+\end{equation}
+for all $x,y \in \overline{\Omega}, x\neq y$, the same goes for its supremum.
+
+Hence $\hsnorm{\cdot}$ is a seminorm as was to be shown.
+
+Now, let $\{u_n\}_{n\in\N} \subset C^{0,\gamma}$ be a Cauchy sequence. Then necessarily it is also a Cauchy sequence in the supremum norm $\cnorm{\cdot}$. Since $(C(\overline{\Omega}), \cnorm{\cdot})$ is complete, there then exists a continuous $u$ s.t. $u_n \to u$ in the supremum norm.
+
+Choose $N \in \N$ s.t. $\cnorm{u - u_n} < \epsilon/2$ and $\hsnorm{u_n - u_m} < \epsilon/2$ for all $n, m\in \N$. Then for all $x,y \in \Omega$, $x \neq y$,
+\begin{equation}
+\left|\frac{u_m(x) - u_m(y) + u_n(y) - u_n(x)}{|x-y|^\gamma}
+\right| < \epsilon/2\,,
+\end{equation}
+and so because $u_m \to u$ pointwise,
+\begin{equation}
+\left|
+\frac{u(x) - u(y) + u_n(y) - u_n(x)}{|x-y|^\gamma}
+\right|
+=
+\lim_{m\to\infty}
+\left|
+\frac{
+u_m(x) - u_m(y) + u_n(y) - u_n(x)}{|x-y|^\gamma}
+\right| < \epsilon/2\,,
+\end{equation}
+since the above holds for all $m \geq N$. Hence
+ $\hsnorm{u - u_n} \leq \epsilon/2$, and so we have $\hnorm{u - u_n} < \epsilon$.
+ 
+It remains to show that $\hnorm{u} < \infty$. But $\cnorm{u} < \infty$, and
+\begin{equation}
+\hsnorm{u} = \hsnorm{u - u_n + u_n}
+\leq \hsnorm{u - u_n} + \hsnorm{u_n} < \infty\,,
+\end{equation}
+for some $u_n$ satisfying $\hsnorm{u - u_n} < \infty$.
+
+This completes the proof.\qed
+
+\section{Problem 5}
+\newcommand{\spt}{\text{spt}}
+\newcommand{\wnorm}[2]{||#1||_{W^{1,\infty}(#2)}}
+Let $\Omega \subset \R^n$ be open and bounded with a $C^1$ boundary. Let $V$ strictly contain $\Omega$.\footnote{The text says "$V$ strictly larger than $\Omega$"--this is the only interpretation I can make sense of.}
+
+The task is to show that there exists a bounded linear operator 
+\begin{equation}
+E: W^{1,\infty}(\Omega) \to W^{1,\infty}(\R^n)
+\end{equation}
+satisfying, for all $w \in W^{1,\infty}(\Omega)$
+\begin{enumerate}
+\item $Eu = u$ for almost all $x\in\Omega$.
+\item $\spt(Eu) \subset V$,
+\item $\wnorm{Eu}{\R^n} \leq C\wnorm{u}{\Omega}$,
+for some $C$ not depending on $u$.\\
+\end{enumerate}
+
+\textbf{Note}
+I believe for the case $p = \infty$, the procedure outlined in Evans for $u \in C^1(\Omega)$ (pp 268-270) will more or less hold directly, so I will roughly follow the book. Where I feel it is obvious, I will then simply refer to the book for the sake of brevity.
+\\
+Now, let $u \in W^{1,\infty}$, and as in the book, assume $\partial \Omega$ is flat near $x_0$, lying in the plane $x_n = 0$.
+
+Then there exists an open ball $B(x_0, r)$, which I split into
+\begin{align*}
+B^+ &:= B \cap \{x_n \geq 0\} \subset \overline{\Omega}\,,\\
+B^- &:=
+B \cap \{x_n \leq 0\} \subset R^n \setminus \overline{\Omega}\,.
+\end{align*}
+Set $\overline{u}$ to be
+\begin{equation}
+\overline{u}(x) =
+\left\{
+\begin{array}{lc}
+u(x)\,,&x\in B^+\,,\\
+-3u(x_1,x_2,\cdots,x_{n-1},-x_n)
++ 4u(x_1,x_2,\cdots,x_{n-1},-\frac{x_n}{2})
+\,,
+&x\in B^-\,.
+\end{array}
+\right.
+\end{equation}
+Moreover, define $\{v_j\}_{j=1}^n$ to be
+\begin{equation}
+v_j(x) =
+\left\{
+\begin{array}{lc}
+u_{x_j}(x)\,,&x\in B^+\,,\\
+3u_{x_j}(x_1,x_2,\cdots,x_{n-1},-x_n)
++ 4u_{x_j}(x_1,x_2,\cdots,x_{n-1},-\frac{x_n}{2})
+\,,
+&x\in B^-, j\neq n\,,
+\\
+3u_{x_n}(x_1,x_2,\cdots,x_{n-1},-x_n)
+- 2u_{x_n}(x_1,x_2,\cdots,x_{n-1},-\frac{x_n}{2})
+\,,
+&x\in B^-\, j = n\,,
+\end{array}
+\right.
+\end{equation}
+for $j = 1, \cdots, n$.
+Then the next step is to verify that $v_j$ is a weak derivative of $\overline{u}$ in $B$. Let $\phi \in C^\infty_c(B)$. 
+For ease of notation, let $x' = x_1, x_2, \cdots, x_{n-1}$.
+Then for $j = n$,
+\begin{align*}
+&\int_B \phi_{x_n} \overline{u}\dx
+=
+\int_{B^+}\!\! \phi_{x_n} \overline{u}\:\dx
++
+\int_{B^-}\!\! \phi_{x_n} \overline{u}\:\dx
+\\
+&=
+\int_{B^+}\!\! \phi_{x_n} u \:\dx\\
+&+
+\int_{B^+}\!\! \phi_{x_n}(x', -x_n) 
+-3u(x',x_n)
++ 4u(x',\frac{x_n}{2}))
+\:\dx \,.
+\end{align*}
+It is now safe to integrate by parts. Obtain
+\begin{align*}
+(\cdots)
+=
+&
+\cancel{
+\int_{x_n = 0}\!\!\!\! \phi u \:\mbox{D}s(x)
+}
+-
+\int_{B^+}\!\! \phi u_{x_n} \:\dx\\
+&+
+\cancel{
+\int_{x_n = 0}\!\!\!\! \phi
+(-3u+ 4u)
+ \:\mbox{D}s(x)
+}
+-
+\int_{B^+}\!\! \phi(x',-x_n)(
+3u_{x_n}(x',x_n) + 2u_{x_n}(x',\frac{x_n}{2})
+) \:\dx \\
+=&
+-\int_{B^+}\!\! \phi u_{x_n} \:\dx
+-\int_{B^-}\!\! \phi(3u_{x_n}(x',-x_n) - 2u_{x_n}(x',\frac{-x_n}{2}))\:\dx \\
+&=
+\int_B\!\!\phi v \:\dx\,.
+\end{align*}
+\newcommand{\hbnorm}[2]{||#1||_{C^{0,\gamma}(\overline{#2})}}
+The cases $1 \leq j \leq n$ are similar and omitted. Hence, for any multiindex $\alpha$ with $|\alpha| = 1$, letting $D^\alpha u = v_\alpha$, we have $\int_B\!  D^\alpha \!\phi\: \overline{u}\:\dx
+= \int_B D^\alpha \overline{u} \:\phi\: \dx$.
+
+As in the book, it is clear that $\hbnorm{\overline{u}{B}} \leq C\hbnorm{u}{B^+}$.
+\\
+
+The rest of the proof now goes exactly as in the book, so the esteemed reader may skip the rest: if $\partial \Omega$ is not flat near $x_0$, use a $C^1$ homeomorphism to straighten it out, then exploit compactness of $\partial \Omega$ to cover it with a finite number, say $N$, of open sets $W_i$ in which to obtain extensions $u_i$ of $u$. Let $u_0 = u$, choose $W_0$ such that $\bigcup_{i=0}^N W_i = \Omega$, and let $\{\zeta_i\}_{i=0}^N$ form an associated partition of unity. Finally, let $v = \sum_{i=0}^N \zeta_i u_i$. Then $\hbnorm{v}{\Omega} \leq C\hnorm{u}$ for some $C > 0$, and we may define $E$ as the linear map mapping $u$ to $v$.
+\qed
+
+\section{Problem 6}
+Let $u: \R^3 \to \R$ be given by
+\begin{align}
+&u(x) := |x - x_0|^{\alpha}\,,
+&
+x\in B(x_0;1) =: \Omega\,.
+\end{align}
+for some $\alpha > 0$. For $x \neq 0$, we have $u_{x_i} = -\alpha x_i |x - x_0|^{-\alpha-2}$, and so
+\begin{equation}
+|D u| = |\alpha| |x-x_0|^{-\alpha - 1}\,.
+\end{equation}
+For the notion of a weak derivative to make sense, we require that $\int_\Omega \phi_{x_i}\: u\:\dx = \int_\Omega u_{x_i} \:\phi :\dx$ for a test function $\phi$, $j = 1, 2, 3$. Let $0 < \epsilon < 1$, and compute
+\begin{equation}
+\int_{\Omega \setminus B(x_0,\epsilon}\!\!\!\!\!\!\!\!\!\!\!\!\!
+\phi_{x_i} u
+\:\dx
+=
+-
+\int_{\Omega \setminus B(x_0,\epsilon}\!\!\!\!\!\!\!\!\!\!\!\!\!
+\phi\: u_{x_i}
+\:\dx
++ 
+\int_{\partial B(x_0, \epsilon)}\!\!\!\!\!\!\!\!\!\!
+\phi u \nu^i
+\\mbox{d}S(x)\,,
+\end{equation}
+$\mathbf{\nu}$ denoting the inward pointing unit normal.
+
+We have
+\begin{equation}
+\left|
+\int_{\partial B(x_0, \epsilon)}\!\!\!\!\!\!\!\!\!\!
+\phi u \nu^i
+\mbox{d}S(x)
+\right|
+\leq
+||\phi||_{L^\infty(\Omega)}
+\int_{\partial B(x_0, \epsilon)}\!\!\!\!\!\!\!\!\!\!
+\epsilon^{-\alpha}\:\mbox{d}S(x)
+\leq
+C \epsilon^{2-\alpha} \to 0
+\end{equation}
+as $\epsilon \to 0$ so long as $\alpha < 2$.
+
+For a bound on $||Du||_{W^{1,2}(\Omega)}$, we have
+\begin{equation}
+\int_\Omega\!\!\! |Du|^2\:\dx
+= 
+\alpha^2
+\int_\Omega\!\!\! |x-x_0|^{-2\alpha-2}\:\dx
+= \alpha^2 4\pi
+\int_0^1 \!\!\!  r^{-2\alpha}\:\mbox{d}r 
+= 
+\alpha^2 4\pi \frac{1}{1 - 2\alpha}
+\end{equation}
+which is finite iff $\alpha < 1/2$. This is consistent with the result in the book, pp. 260.\qed
+\end{document}

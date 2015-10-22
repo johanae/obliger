@@ -1,0 +1,249 @@
+\documentclass[11pt]{amsart}
+%\usepackage{pstricks,pst-plot}
+\usepackage{tikz}
+\usepackage[utf8]{inputenc}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{non}[theorem]{Nonsense}
+\newtheorem{observation}[theorem]{Observation}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{xca}[theorem]{Exercise}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{nremark}[theorem]{Bemerkning}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{improvement}[theorem]{Improvement}
+\newtheorem{discus}[theorem]{Discus}
+\newtheorem{ptheorem}[theorem]{Possible Theorem}
+\newtheorem{project}[theorem]{Project}
+
+\newcommand\hra{\hookrightarrow}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cW}{\mathcal{W}}
+
+
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\B}{\mathbb{B}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\D}{\mathbb{D}}
+\renewcommand{\H}{\mathbb{H}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\U}{\mathbb{U}}
+\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bD}{\mathbb{D}}
+
+\newcommand\Subset{\subset\subset}
+\newcommand\wt{\widetilde}
+\newcommand\ddt{\frac{d}{dt}}
+
+
+\newcommand{\Aut}{\mathop{{\rm Aut}}}
+\newcommand{\seq}[1]{\{#1\}_{n\in\N}}
+
+\def\di{\partial}
+\def\bs{\backslash}
+\def\e{\epsilon}
+
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+\numberwithin{equation}{section}
+
+
+%
+%
+%  THE DOCUMENT
+%
+%
+
+\begin{document}
+\title[MAT-INF4130]{Compulsory exercise 1}
+
+\author{Johan Åmdal Eliassen}
+
+\maketitle
+\subjclass[Mat-inf4130 2015]{}
+
+\date{\today}
+\keywords{}
+
+\section{Problem 1}
+Let $A \in \C^{n\times n}$ be a nonsingular triangular matrix with inverse $B = [\mathbf{b_1}\: \mathbf{b_2}\: \cdots \:\mathbf{b_n}]$.
+
+Then we have
+\begin{equation}
+AB =
+[
+A \mathbf{b}_1\: A \mathbf{b}_2 \_\cdots \:A\mathbf{b}_n
+]\ = I\,,
+\end{equation}
+that is,
+\begin{equation}
+A\mathbf{b}_k = \mathbf{e}_k\,,
+\end{equation}
+$\mathbf{e_k} \in \R^n$ denoting the $k$'th unit vector.
+
+As usual, denote entry $(i,j)$ of a matrix $A$ by $a_{i,j}$.
+
+\subsection*{Case 1: A lower triangular}
+For $k = 1$, there is nothing to prove. 
+Let $1 < k \leq n$. Define $A_{-[n-k+1]} \in \C^{n-k+1 \times n - k +1}$ by
+\begin{equation}
+A_{-[n-k+1]}
+:= 
+\left(
+\begin{matrix}
+a_{k,k} &\cdots &a_{k, n} \\
+\vdots &\vdots & \vdots \\
+a_{n,k} & \cdots &a_{n,n}
+\end{matrix}
+\right)\,.
+\end{equation}
+Then, for some matrix $L \in \C^{k-1 \times n-k+1}$, we have
+\begin{equation}
+A \mathbf{b}_k =
+\left(
+\begin{matrix}
+A_{[k-1]} & 0 \\
+L & A_{-[n-k+1]}
+\end{matrix}
+\right)
+\left(
+\begin{matrix}
+\mathbf{b}_k^u \\
+\mathbf{b}_k^l
+\end{matrix}
+\right)
+= 
+\left(
+\begin{matrix}
+A_{[k-1]}\mathbf{b}_k^u \\
+L\mathbf{b}_k^u + A_{-[n-k+1]}\mathbf{b}_k^l
+\end{matrix}
+\right)
+=
+\left(
+\begin{matrix}
+0 \\ \mathbf{e}_1
+\end{matrix}
+\right)\,,
+\end{equation}
+where $\mathbf{b}_k^u \in \R^{k-1}$ denote the $k-1$ upper elements of $\mathbf{b}_k$ and $\mathbf{b}_k^l \in \R^{n-k+1}$ denote the remaining $n-k+1$ lower elements.
+
+Since $A$ is nonsingular and triangular, so is $A_{[k]}$ (because necessarily the diagonal elements of $A_{[k]}$ are then all nonzero), so we conclude that $\mathbf{b}_k^u \equiv 0$. Thus, we are left only with the system of equations
+\begin{equation}
+A_{-[n-k+1]}\mathbf{b}_k^l = \mathbf{e_1}\,,
+\end{equation}
+or in MATLAB notation,
+$A(k:n, k:n)b(k:n,k:n) = I(k:n,k)$, as was to be shown.
+\qed
+\subsection*{Case 2: A upper triangular}
+Similarly, for some matrix $U$, we write
+\begin{equation}
+A \mathbf{b}_k= 
+\left(
+\begin{matrix}
+A_{[k]} & U \\
+0 & A_{-[n-k]}
+\end{matrix}
+\right)
+\left(
+\begin{matrix}
+\mathbf{b}_k^u \\
+\mathbf{b}_k^l
+\end{matrix}
+\right)
+=
+\left(
+\begin{matrix}
+A_{[k]}\mathbf{b}_k^u + U\mathbf{b}_k^l \\
+A_{-[n-k]}\mathbf{b}_k^l
+\end{matrix}
+\right)
+\,,
+\end{equation}
+leading us to conclude that $b_k^l \equiv \mathbf{0}$, so we need only solve
+\begin{equation}
+A_{[k]}\mathbf{b}_k^u = \mathbf{e}_k\,,
+\end{equation}
+or in MATLAB notation,
+$A(1:k, 1:k)\mathbf{b}_k(1:k) = I(1:k,k)$.
+\qed
+
+As a final remark, we note that the nondiagonal nonzero elements of $B$ may be stored in place of the zero elements of $A$. That is, we may simply store $b_{i,j}$ as $a_{j,i}$, for all elements of $B$ not on the diagonal or on the zero part of $B$.
+
+The entries on the diagonal are not worth storing, as $b_{i,i} = 1/(a_{i,i})$.
+
+\section*{Problem 2}
+We have, for $j \geq k = 1, 2, \cdots, n$, if $A$ is lower triangular,
+\begin{equation}
+A_{-[n-k+1]}\mathbf{b}_k^l = \mathbf{e_1}\,
+\end{equation}
+which is solved by
+\begin{align*}
+(\mathbf{b}_k^l)_1 = b_{k,k} &= \frac{-1}{a_{k,k}}\,, \:\: \text{1 division}\,, \\
+(\mathbf{b}_k^l)_2 = b_{k, k+1} &= -\frac{a_{k+1,k}b_{k,k}}{a_{k+1,k+1}}\,,
+\:\:\text{1 multiplication, 1 division;}
+ \\
+\cdots \\
+(\mathbf{b}_k^l)_{n-k+1} = b_{k, n} &=
+-\frac{1}{a_{n,n}}\sum_{j=n-k+1}^n
+a_{j,n}b_{k,j}\,,
+\:\:\text{2k-1 arithmetic operations.}
+\end{align*}
+This gives $j$ multiplications/divisions and $j-1$ additions/subtractions for the $j$'th element of the $k$'th column of $B$, so upon adding all operations for all $k$ rows, we have that the total number of arithmetic operations is
+\newcommand{\dk}{\:\mbox{d}k}
+\begin{align*}
+&\sum_{k=1}^n
+\sum_{j= 1}^{n-k+1}
+(2j - 1)
+=
+\sum_{k=1}^n
+(n-k+1)(n-k+2) - (n-k+1)
+=
+\sum_{k=1}^n
+(n-k+1)^2 \\
+&\approx
+\int_1^n (n-k+1)^2 \dk
+=
+-\frac{1}{3}[(n-k+1)^3]_{k=1}^n = -\frac{1}{9} 
++ \frac{n^3}{3} \approx \frac{n^3}{3}\,.
+\end{align*}
+Hence, the algorithm is of order $\mathcal{O}(n^3)$.
+\section*{Problem 3}
+The code snippets compute the inverse of an upper diagonal matrix; it does this via a row-oriented back-solve very similar to Algorithm $2.7$. Finally, the program prints the product $A U$, where $U$ is the computed inverse matrix of $A$, hopefully giving the identity matrix as a result. The variables $r$ and $k$ denote the rows and columns of $U$ respectively.
+\end{document}

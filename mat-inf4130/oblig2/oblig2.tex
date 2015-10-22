@@ -1,0 +1,385 @@
+\documentclass[11pt]{amsart}
+%\usepackage{pstricks,pst-plot}
+\usepackage{tikz}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{non}[theorem]{Nonsense}
+\newtheorem{observation}[theorem]{Observation}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{xca}[theorem]{Exercise}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{nremark}[theorem]{Bemerkning}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{improvement}[theorem]{Improvement}
+\newtheorem{discus}[theorem]{Discus}
+\newtheorem{ptheorem}[theorem]{Possible Theorem}
+\newtheorem{project}[theorem]{Project}
+
+\newcommand\hra{\hookrightarrow}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cW}{\mathcal{W}}
+
+
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\B}{\mathbb{B}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\D}{\mathbb{D}}
+\renewcommand{\H}{\mathbb{H}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\U}{\mathbb{U}}
+\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bD}{\mathbb{D}}
+
+\newcommand\Subset{\subset\subset}
+\newcommand\wt{\widetilde}
+\newcommand\ddt{\frac{d}{dt}}
+
+
+\newcommand{\Aut}{\mathop{{\rm Aut}}}
+\newcommand{\seq}[1]{\{#1\}_{n\in\N}}
+
+\def\di{\partial}
+\def\bs{\backslash}
+\def\e{\epsilon}
+
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+\numberwithin{equation}{section}
+
+
+%
+%
+%  THE DOCUMENT
+%
+%
+
+\begin{document}
+\title[MAT-INF4130]{Compulsory exercise 1}
+
+\author{Johan Åmdal Eliassen}
+
+\maketitle
+\subjclass[Mat-inf4130 2015]{}
+
+\date{\today}
+\keywords{}
+
+\section{Givens rotations to solve $A\mathbf{x}= \mathbf{b}$}
+General idea, using roughly the same notation as in the book:
+\begin{equation*}\left(
+\begin{matrix}
+x&x&x&x \\
+x&x&x&x \\
+x&x&x&x \\
+x&x&x&x \\
+\end{matrix}
+\right.
+\left|
+\begin{matrix}
+b_1 \\
+b_2 \\
+b_3 \\
+b_4
+\end{matrix}
+\right)
+\rightarrow
+\left(
+\begin{matrix}
+\mathbf{r}&x^*&x^*&x^* \\
+x&x&x&x \\
+x&x&x&x \\
+\mathbf{0}&x^*&x^*&x^* \\
+\end{matrix}
+\right.
+\left|
+\begin{matrix}
+b_1 \\
+b_2 \\
+b_3^* \\
+b_4^*
+\end{matrix}
+\right)
+\rightarrow
+\left(
+\begin{matrix}
+\mathbf{r}^*&x^{**}&x^{**}&x^{**}\\
+x&x&x&x \\
+\mathbf{0}&x^*&x^*&x^* \\
+0&x^*&x^*&x^* \\
+\end{matrix}
+\right.
+\left|
+\begin{matrix}
+b_1 \\
+b_2^{**} \\
+b_3^* \\
+b_4^*
+\end{matrix}
+\right)
+\end{equation*}
+\begin{equation*}
+\rightarrow
+\left(
+\begin{matrix}
+r_{1,1}&r_{1,2}&r_{1,3}&r_{1,4} \\
+\mathbf{0}&x^{**}&x^{**}&x^{**} \\
+0&x^{**}&x^{**}&x^{**}\\
+0&x^*&x^*&x^* \\
+\end{matrix}
+\right.
+\left|
+\begin{matrix}
+c_1 \\
+b_2^{**} \\
+b_3^{**} \\
+b_4^*
+\end{matrix}
+\right)
+\rightarrow \cdots
+\end{equation*}
+with the asterix superscripts denoting the number of times 
+that element has been changed via matrix multiplication.
+
+In Python, this becomes:
+\begin{lstlisting}
+def rotsolve(A, b):
+    """
+    Solve the system Ax=b where A any N x N matrix, again using Givens rotations. Modified from rothesstri(A, b).
+    
+    A: A matrix. Nonsingular ones only.
+    b: The right hand side.
+    """
+    n = shape(A)[0]
+    A = hstack([A, b])
+    for k in xrange(n-1):   # columns
+        for j in xrange(n - 2, k -1, -1):   # rows
+            r = linalg.norm([ A[j , k] , A[j + 1, k] ])
+            if r>0:
+                c=A[j, k]/r; s=A[j + 1, k]/r
+                A[[j, j + 1],(k + 1):(n + 1)] = \
+                    [[c, s],[-s, c]]*A[[j, j + 1],(k + 1):(n + 1)]
+            A[j, k] = r; A[j+1,k] = 0
+    z = A[:, n].copy()
+    rbacksolve(A[:, :n], z, n)
+    return z
+\end{lstlisting}
+The program itself is enclosed, obviously.
+
+\subsection*{An aside of arguable interest}Comparing errors (problem 3) with a friend gave very different results; there are obviously many ways to implement this solver. The following is a perhaps more intuitive approach:
+\begin{equation*}\left(
+\begin{matrix}
+x&x&x&x \\
+x&x&x&x \\
+x&x&x&x \\
+x&x&x&x \\
+\end{matrix}
+\right.
+\left|
+\begin{matrix}
+b_1 \\
+b_2 \\
+b_3 \\
+b_4
+\end{matrix}
+\right)
+\rightarrow
+\left(
+\begin{matrix}
+\mathbf{r}&x^*&x^*&x^* \\
+x&x&x&x \\
+x&x&x&x \\
+\mathbf{0}&x^*&x^*&x^* \\
+\end{matrix}
+\right.
+\left|
+\begin{matrix}
+b_1^* \\
+b_2 \\
+b_3 \\
+b_4^*
+\end{matrix}
+\right)
+\rightarrow
+\left(
+\begin{matrix}
+\mathbf{r}&x^*&x^*&x^* \\
+x&x&x&x \\
+\mathbf{0}&x^{*}&x^{*}&x^{*}\\
+0&x^*&x^*&x^* \\
+\end{matrix}
+\right.
+\left|
+\begin{matrix}
+b_1^{**} \\
+b_2 \\
+b_3^* \\
+b_4^*
+\end{matrix}
+\right)
+\end{equation*}
+\begin{equation*}
+\rightarrow
+\left(
+\begin{matrix}
+r_{1,1}&r_{1,2}&r_{1,3}&r_{1,4} \\
+\mathbf{0}&x^*&x^*&x^* \\
+0&x^*&x^*&x^*\\
+0&x^*&x^*&x^* \\
+\end{matrix}
+\right.
+\left|
+\begin{matrix}
+c_1 \\
+b_2^{**} \\
+b_3^{**} \\
+b_4^*
+\end{matrix}
+\right)
+\rightarrow \cdots\\.
+\end{equation*}
+with code:
+\begin{lstlisting}
+def rotsolveAlt(A, b):
+    """
+    Solve the system Ax=b where A any N x N matrix, again using Givens
+    rotations. Modified from rothesstri(A, b).
+    
+    A: A matrix. Nonsingular ones preferred, obviously.
+    b: The right hand side.
+    """
+    n = shape(A)[0]
+    A = hstack([A, b])
+    for k in xrange(n-1):   # columns
+        for j in xrange(k + 1, n):   # rows
+            r = linalg.norm([ A[k , k] , A[j, k] ], 2)
+            if r>0:
+                c=A[k, k]/r; s=A[j, k]/r
+                A[[k, j],(k + 1):(n+1)] = \
+                    mat([[c, s],[-s, c]])* \
+                    A[[k, j],(k + 1):(n+1)]
+            A[k, k] = r; A[j,k] = 0
+    z = A[:, n].copy()
+    rbacksolve(A[:, :n], z, n)
+    return z
+\end{lstlisting}
+\section{Complexity of the algorithm}
+Taking, for simplicity, the computation of $r$ to be four operations (squaring, squaring, adding, taking the square root), and having that computing $c$ and $s$ each takes one operation, we  have besides this each inner step in the algorithm (i.e. for each $j$) containing a multiplication of a $(2\times 2)$ matrix with a $(2 \times (n - k + 1))$ matrix, for a total of $6(n-k + 1) + 6 = 6(n - k + 2)$ operations. 
+
+There are $n-k$ $j$-steps, making for a total of $6(n-k + 2)(n-k)$ arithmetic operations per $k$-step. Thus, the total number of operations are
+\newcommand{\dk}{\:\mbox{d}k}
+\newcommand{\dl}{\:\mbox{d}l}
+\begin{equation}
+\sum_{k = 1}^{n-1}
+6(n - k + 2)(n-k)
+=
+6
+\sum_{l = 1}^{n-1}l(l+2)
+\end{equation}
+\begin{equation}
+\approx 6\int_0^{n-1} l^2 + 2l \dl = 
+2(n-1)^3 + 2(n-1) = 2n^3 - 6n^2 + 8n - 1 \approx \underline{2n^3\,.}
+\end{equation}
+as $n$ becomes large.
+
+Finally, we end up with a system $U\mathbf{x} = \mathbf{c}$, where $U$ is upper triangular, at which point the backsolver can be applied, but that algorithm has takes $n^2$ operations, thus not changing the result.
+$\qed$
+\section{Also}
+The code is enclosed, but:
+\begin{lstlisting}
+if __name__ == '__main__':
+    
+    N = 20
+    
+    H_ = hilbert(N)
+    xe_ = mat(ones(N)).T
+    err = empty(N)
+    errAlt = empty(N)
+    iterations = arange(N)
+    for n in iterations:
+#        H = H_[:n+1, :n+1]; xe = xe_[:n+1]
+        H = hilbert(n+1); xe = mat(ones(n+1)).T
+        b = H*xe
+        x = rotsolve(H, b)
+        err[n] = linalg.norm(x - xe, 2)
+        y = rotsolveAlt(H, b)
+        errAlt[n] = linalg.norm(y - xe, 2)
+    
+    plt.plot(1+iterations, err, 'b')
+    plt.plot(1 +iterations, errAlt, 'r')
+    plt.legend(['Algorithm 1','Algorithm 2'])
+    plt.xlabel('size of matrix [n]')
+    plt.ylabel('||x - x_e||_2')
+    plt.show()
+\end{lstlisting}
+As noted, there were two implementations of \verb|rotsolve|; I have plotted the error of both.
+\includegraphics[scale=•]{•}=.5]{problem3}
+\end{document}

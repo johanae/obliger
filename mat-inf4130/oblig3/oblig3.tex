@@ -1,0 +1,319 @@
+\documentclass[11pt]{amsart}
+%\usepackage{pstricks,pst-plot}
+\usepackage{cancel}
+\usepackage{tikz}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{non}[theorem]{Nonsense}
+\newtheorem{observation}[theorem]{Observation}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{xca}[theorem]{Exercise}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{nremark}[theorem]{Bemerkning}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{improvement}[theorem]{Improvement}
+\newtheorem{discus}[theorem]{Discus}
+\newtheorem{ptheorem}[theorem]{Possible Theorem}
+\newtheorem{project}[theorem]{Project}
+
+\newcommand\hra{\hookrightarrow}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cW}{\mathcal{W}}
+
+
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\B}{\mathbb{B}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\D}{\mathbb{D}}
+\renewcommand{\H}{\mathbb{H}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\U}{\mathbb{U}}
+\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bD}{\mathbb{D}}
+
+\newcommand\Subset{\subset\subset}
+\newcommand\wt{\widetilde}
+\newcommand\ddt{\frac{d}{dt}}
+
+
+\newcommand{\Aut}{\mathop{{\rm Aut}}}
+\newcommand{\seq}[1]{\{#1\}_{n\in\N}}
+
+\def\di{\partial}
+\def\bs{\backslash}
+\def\e{\epsilon}
+
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+\numberwithin{equation}{section}
+
+
+%
+%
+%  THE DOCUMENT
+%
+%
+
+\begin{document}
+\title{Compulsory exercise 3}
+%\subjclass[Mat-inf4130 2015]{}
+\author{Johan Åmdal Eliassen}
+
+\maketitle
+
+\date{\today}
+%\keywords{}
+
+\section{Exercise 8.10: Fitting a circle to points}
+Given points $\{t_i, y_i\}_{i=1}^m \subset \R^2$, $m \geq 3$, we wish to fit a circle to these points. That is, we wish to satisfy
+\begin{equation}\tag{*}\label{circle}
+(t_i - c_1)^2 + (y_i - c_2)^2 = r^2\,,\:\:1 \leq i \leq m\,,
+\end{equation}
+hence $c_1$, $c_2$ and $r$ are the unknowns to be solved for.
+\subsection*{a}
+We have \begin{equation}
+\eqref{circle} = t_i^2 + y_i^2 + c_1^2 + c_2^2 - 2c_1t_i - 2c_2 y_i\,,
+\end{equation}
+or equivalently,
+\begin{equation}
+2c_1 t_i^2 + 2c_2 y_i^2 - c_1^2 - c_2^2 + r^2
+= t_i^2 + y_i^2\,.
+\end{equation}
+Set $x_1 = 2c_1$, $x_2 = 2c_2$, and $x_3 = -c_1^2 - c_2^2 + r^2$, and this becomes
+\begin{equation}
+t_i x_1 + y_i x_2 + x_3 = t_i^2 + y_i^2\,,
+\end{equation}
+or in abbreviated matrix form,
+\begin{equation}
+\underbrace{
+\left(
+\begin{matrix}
+t_i, & y_i, & 1
+\end{matrix}
+\right)}_{=: \mathbf{A}}
+\left(
+\begin{matrix}
+x_1, & x_2, & x_3
+\end{matrix}
+\right)^T
+=
+\underbrace{
+(t_i^2 + y_i^2)}_{=: \mathbf{b}}\,,\:\:1\leq i \leq m\,.
+\end{equation}
+If we can solve the linear system above, it is trivial to derive the original unknowns. We have $c_1 = x_1/2$, $c_2 = x_2/2$ and $r^2 = c_1^2 + c_2^2 + x_3$.
+
+\subsection*{b}
+LSQ: minimize $E$ given by
+\begin{align*}
+E(\mathbf{x}
+&=
+||A\mathbf{x}-  b||_2^2
+=
+\sum_{i=1}^m\left(
+(t_i x_1 + y_i x_2 + x_3) - (t_i^2 + y_i^2)\right)^2 \\
+&=
+\sum_{i=1}^m
+\left(
+t_i(x_1 - t_i) + y_i(x_2 - y_i) + x_3
+\right)^2\,.
+\end{align*}
+While it's by far the most unwieldy way to solve this problem, one way to proceed is to set the gradient of $E$ to zero.
+\begin{equation}
+\frac{\partial E}{\partial x_j}
+=
+\sum_{i=1}^m
+2q_{i,j} (t_i(x_1 - t_i) + y_i(x_2 - y_i) + x_3) = 0\,,
+\end{equation}
+with $q_{i,j} = t_i, y_i$ or $1$ for $j = 1,2,3$ respectively.
+Rewritten, we obtain the three equations
+\begin{align}
+&
+x_1
+\sum_{i=1}^m t_i^2 + x_2 \sum_{i=1}^m t_i y_i + x_3 \sum_{i=1}^m t_i
+ = \sum_{i=1}^m(t_i^3 + y_i^2 t_i) \,,\\
+&x_1 \sum_{i=1}^m t_i y_i + x_2 \sum_{i=1}^m y_i^2 + x_3 \sum_{i=1}^m y_i = \sum_{i=1}^m\left(
+t_i**2 y_i + y_i^3
+\right) \,,\\
+&x_1 \sum_{i=1}^m t_i + x_2 \sum_{i=1}^m y_i + m x_3 = \sum_{i=1}^m \left(
+t_i^2 + y_i^2
+\right)\,.
+\end{align}
+In matrix form, $\mathbf{B}\mathbf{x} = \mathbf{c}$.
+\subsection*{c}
+Two more or less obvious conditions are sufficient to ensure that $\mathbf{A}$ has full column rank: first, there must be at least three distinct points $(t_i, y_i)$, and secondly, these three points must not all lie on the same line $y(t) = \alpha t$, for some $\alpha \in \R$. If these conditions are met, $\mathbf{A}$ is guaranteed to have three linearly independed rows, i.e. a row rank of 3, which implies full column rank. These conditions are necessary even if the system is otherwise overdetermined.
+\subsection*{d}
+Let $\{(t_i, y_i)\}_{i=1}^m = \{(1, 4),(3, 2),(1, 0)\}$, for $m=3$. Three points on a circle uniquely determines it, so we may simply plug the points into $\mathbf{A}$ to obtain
+$\mathbf{x} = (2,4,-1)^T$, or
+$c_1 = 1$, $c_2 = 2$, $r = 2$.
+
+To verify that the calculations in (b) were correct, inserting the numbers into $\mathbf{B}$ and $\mathbf{c}$ as obtained there, I get
+\begin{equation}
+\left(
+\begin{matrix}
+11&10&5\\
+10&20&6\\
+5&6&3
+\end{matrix}
+\right)
+\mathbf{x}
+=
+\left(
+\begin{matrix}
+57\\94\\31
+\end{matrix}
+\right)\,,
+\end{equation}
+which yields the same results.
+
+\section*{Exercise 8.24}
+\renewcommand{\A}{\mathbf{A}}
+\newcommand{\Ast}{\mathbf{A^*}}
+\newcommand{\Gaist}{(\mathbf{A}^\dagger)^*}
+\newcommand{\Gai}{\mathbf{A^\dagger}}
+
+\renewcommand{\B}{\mathbf{B}}
+\newcommand{\Bst}{\mathbf{B}^*}
+\newcommand{\Binv}{\mathbf{C}}
+\newcommand{\Bstinv}{(\mathbf{C^*}}
+Given $\A \in \C^{m\times n}$, from previous exercises (8.17, 8.18), we have that $\Gai$ is the unique matrix satisfying the following:
+\begin{enumerate}
+\item $(\A\Gai)^* = \A\Gai$,
+\item $(\Gai \A)^* = \Gai \A$,
+\item $\Gai \A \Gai = \Gai$,
+\item $\A \Gai \A = \A$.
+\end{enumerate}
+Hence, for a matrix $\B$, to show that a matrix $\Binv$ is the generalized inverse of $\B$ is to show that $\B$ and $\Binv$ together satisfy the four identities above.
+
+\subsection*{a} Show that $(\mathbf{A}^*)^\dagger = (\Gai)^*$:
+For notational simplicity, let $\mathbf{B} = \A^*$, $\mathbf{C} = \Gaist$.
+
+(1) and (2) trivially hold; for (3) we have
+\begin{align*}
+\Binv \B \Binv
+=((\Binv \B \Binv)^*)^*
+= (\Binv^* \B^* \Binv^*)^*
+=(\Gai \A \Gai)^* = \Gaist = \Binv\,,
+\end{align*}
+and likewise for (4),
+\begin{equation}
+\B \Binv \B
+=((\B \Binv \B)^*)^*
+=(\A \Gai \A)^* = \A^* = \B\,.
+\end{equation}
+Hence $\Binv = \Gaist$ is indeed the generalized inverse of $\B = \Ast$.
+\qed
+\subsection*{b}
+Show that $(\Gai)^\dagger = \A$.
+
+(3) and (4) follow from (4) and (3) for $\A$.
+For (1) we have:
+\begin{equation*}
+(\Gai \A)^*
+= \Ast \Gaist\,.
+\end{equation*}
+Now, from (a) this becomes
+\begin{equation*}
+(...) = \Ast (\Ast)^\dagger
+= (\Ast (\Ast)^\dagger)^*
+= \Gai \A\,.
+\end{equation*}
+again using (a).
+
+The procedure for showing (2) is practically identical:
+\begin{equation*}
+(\A \Gai)^*
+= \Gaist \Ast\
+= (\Ast)^\dagger \Ast
+= ((\Ast)^\dagger \Ast )^*
+= \A\ \Gai,.
+\end{equation*}
+\qed
+\subsection*{c}
+Show: $(\alpha \A)^\dagger = \frac{1}{\alpha} \A^\dagger$, $\alpha \in \C\setminus \{0\}$.
+
+This is more or less trivial. For (1), we have
+$(\alpha \A \frac{1}{\alpha}\Gai)^* = (\A \Gai)^* = \A \Gai = \alpha \A \frac{1}{\alpha} \Gai$, and similarly for (2), and for (3) and (4),
+\begin{equation}
+\frac{1}{\alpha}\Gai \alpha \A \frac{1}{\alpha}\Gai
+=
+\frac{1}{\alpha}(\Gai \A \Gai)
+=
+\frac{1}{\alpha} \Gai\,,
+\end{equation}
+and
+\begin{equation}
+\alpha \A \frac{1}{\alpha}\Gai \alpha \A
+=
+\alpha \A \Gai \A = \frac{1}{\alpha} \A\,.
+\end{equation}
+\qed
+\end{document}

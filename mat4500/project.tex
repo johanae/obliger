@@ -1,0 +1,289 @@
+\documentclass[11pt]{amsart}
+%\usepackage{pstricks,pst-plot}
+\usepackage{tikz}
+\usepackage[utf8]{inputenc}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{non}[theorem]{Nonsense}
+\newtheorem{observation}[theorem]{Observation}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{xca}[theorem]{Exercise}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{nremark}[theorem]{Bemerkning}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{improvement}[theorem]{Improvement}
+\newtheorem{discus}[theorem]{Discus}
+\newtheorem{ptheorem}[theorem]{Possible Theorem}
+\newtheorem{project}[theorem]{Project}
+
+\newcommand\hra{\hookrightarrow}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cW}{\mathcal{W}}
+
+
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\B}{\mathbb{B}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\D}{\mathbb{D}}
+\renewcommand{\H}{\mathbb{H}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\U}{\mathbb{U}}
+\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bD}{\mathbb{D}}
+
+\newcommand\Subset{\subset\subset}
+\newcommand\wt{\widetilde}
+\newcommand\ddt{\frac{d}{dt}}
+
+
+\newcommand{\Aut}{\mathop{{\rm Aut}}}
+\newcommand{\seq}[1]{\{#1\}_{n\in\N}}
+
+\def\di{\partial}
+\def\bs{\backslash}
+\def\e{\epsilon}
+
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+\numberwithin{equation}{section}
+
+
+%
+%
+%  THE DOCUMENT
+%
+%
+
+\begin{document}
+\author{Johan Åmdal Eliassen}
+\title{Mandatory assignment - MAT4500}
+\maketitle
+\section{Problem 1}
+$D^n := \{x \in \R^n: ||x|| \leq 1\}$ unit ball in $\R^n$,
+$S^n := \{x \in \R^{n+1}: ||x|| = 1\}$ unit sphere in $\R^{n+1}$. Upper and lower hemispheres are respectively denoted
+$S_U^n := \{x\in S^n: x_{n+1} \geq 0\}$,
+$S_L^n := \{x\in S^n: x_{n+1} \leq 0\}$.
+\subsection*{a}
+Define $f_U: S_D^n \to S_U^n$ and $f_L: D^n \to S_U^n$ by
+\begin{align}
+f_U(x) &= (x, \sqrt{1 - ||x||^2}) \,,\\
+f_L(x) &= (x, -\sqrt{1- ||x||^2}) \,.
+\end{align}
+Since the procedure for $f_L$ in general is so similar, I omit it from the following procedure.
+
+To show that $f_U$ is a homeomorphism, I need to verify four things: injectivity, continuity, surjectivity and open mapping.
+\\
+
+Injectivity: let $\pi$ project $S^n_U$ surjectively onto $D^n$. Then for $x\in D^n$, $\pi(f_U(x)) = x$, hence the composition $\pi \circ f_u$ is injective, which implies that $f_U$ is injective.
+\\
+
+To check for surjectivity, let $y \in S^n_U$. Then as $||y||^2 = 1$, we may always write, with $y = (x, x_{n+1})$,
+\begin{equation}
+\sum_{i=1}^n x_i^2 + x_{n+1}^2 = 1
+\iff x_{n+1}^2 = 1 - ||x||^2
+\iff
+x_{n+1} = \sqrt{1 - ||x||^2}\,,
+\end{equation}
+%(the last equivalence is justified by the fact that we are in the upper half sphere)
+with $x = (x_1, x_2, \cdots, x_n) \in D^n$ (because then $||x|| \leq 1$). This shows surjectivity.
+\\
+
+For continuity, let $O \subset S^n_U$ be open. For $y \in O$, we write $y = (x, \sqrt{1-||x||^2})$, which implies that $f^{-1}(O) = \pi(O)$, which is open (because $\pi$ is an open map).
+\\
+
+It only remains to show that $f_U$ and $f_L$ are open maps. Let $O \subset D^n$ be an open set. Then
+\begin{equation}
+f_U(O)
+= \{
+(x, \sqrt{1-||x||^2}) : x \in O
+\}
+= S_U^n \cap
+\Big(O \times (-\epsilon, 1 + \epsilon)\Big)
+\end{equation}
+for some $\epsilon > 0$; hence $f_U$ is open.
+\\
+
+This shows that $f_U$ and $f_L$ are indeed homeomorphisms.\qed
+\subsection*{b}
+For $x\in D^n \sqcup D^n$, write $x = (z, j)$, with $z\in D^n$ and $j \in \{U,L\}$.
+
+We now form an equivalence relation $\sim$ on $D^n \sqcup D^n$ given by $x^1 \sim x^2$ iff either $x^1 = x^2$ or $||z^1|| = ||z^2|| = 1$ \emph{and} $z^1 = z^2$.
+\\
+
+Let $f: D^n \sqcup D^n \to S^n$ be given by $f(x) = f_j(z)$. To see that $f$ is continuous, let $O \subset S^n$, and write $O = O_U \cup O_L$ with $O_U \subset S^n_U$ and $O_L \subset S^n_L$. Then 
+\begin{align*}
+f^{-1}(O)
+&= f^{-1}(O_U) \cup f^{-1}(O_L)
+= (f_U^{-1}(O), \{U\}) \cup (f_L^{-1}(O_L), \{L\}) \\
+&= \phi_U(f^{-1}(O)) \cup \phi_L(f^{-1}(O))\,,
+\end{align*}
+where $\phi_U, \phi_L$ are the canonical injections
+\footnote{
+At this point it bears noting that as I was unsure of a formal definition of a topology on a disjoint union, though an intuitive notion seemed clear enough. To see how I defined it, I (perhaps unwisely) direct the reader to the Wikipedia article on disjoint union topology. $f$ is obviously continuous by this definition.
+}
+. Hence, $f$ is indeed continuous.
+
+Moreover, we have seen that for $y \in S^n$, either $y \in S^n_U$, or $y \in S^n_L$, or $y$ is in both. In all cases there is an $x \in D^n \sqcup D^n$ such that $f(x) = y$.
+\\
+
+Finally, let $f(x^1) = f(x^2)$. If $||x^1|| < 1$, we have that $f(x^1)$ is either in $S^n_U$ or in $S^n_L$, but not in both. But then $f(x^1) = f_j(z^1) = f_j(z^2)$ where $j = j_1 = j_2$, and these maps have already been shown to be injective--thus $z^1 = z^2$ and so $x^1 = x^2$.
+
+If, on the other hand $||x^1|| = ||x^2|| = 1$, then writing $y = f(x^1) = (z, z_{n+1})$, we have $z_{n+1} = 0$ (because $||y|| = ||z|| = 1$) and $z^1 = z^2 = z$; by definition, then $z^1 \sim z^2$.\qed
+
+\subsection*{c}
+Define $\hat{f}: (D^n \sqcup D^n) / \sim$ by $f([x]) = f(x)$, for some representative $x \in [x]$. I then claim that $\hat{f}$ is a homeomorphism onto $S^n$--this will follow readily from Corollary 22.3, pp. 140.
+
+First, note that we do have $\sim$ defined in such a way that 
+\begin{equation}
+(D^n \sqcup D^n) / \sim = \{f^{-1}(\{x\}) : x\in (D^n \sqcup D^n)\}\,.
+\end{equation}
+Hence, $\hat{f}$ is a homeomorphism if and only if $f$ is a quotient map.
+But from (a) we have that $f_U$ and $f_L$ are open maps. We have, for an $O \subset D^n \sqcup D^n$, writing $O = (O_U, \{U\}) \cup (O_L, \{L\})$, so that
+\begin{align*}
+f(O) &= f((O_U,\{U\}) \cup (O_L,\{L\}) = 
+f((O_U,\{U\}))
+\cup
+f((O_L,\{L\})) \\
+&= 
+f_U(O_U) \cup f_L(O_L)\,.
+\end{align*}
+Hence $f$ is an open map, and $\hat{f}$ is a homeomorphism. \qed
+
+\section{Problem 2}
+\subsection*{(a)}
+Let $(X, d)$ be a metric space. Let $C \subset X$ be compact.
+
+First assume $C$ is not closed--then there exists a series $\{x_n\}_{n=1}^\infty$ s.t. $x_n \to x \notin C$. Hence, for each $y \in C$, there is some neighbourhood $B(y; r_y)$ that fails to intersect with some neighbourhood of $x$ intersecting with $C$. This family of neighbourhoods forms an open cover of $C$, from which we may take a finite subcover $\{B(y_i;r_i\}_{i=1}^N$ of $C$--but since each of these open balls fail to intersect with some neighbourhood of $x$ in $C$, this cannot be a finite subcover after all, and so $C$ is not compact--a contradiction.
+\\
+
+Now to show that $C$ is compact: fix $x \in C$ and let $\mathcal{O} := B(x, n)$ for $n \in \N$. Then clearly 
+this is an open cover of $C$, and so there exists a finite subcover $\{B(x, r_i)\}_{i=1}^N$. Choose $j$ such that $r_j \geq r_i$ for all $i \leq N$; then $C \subset B(x, r_j)$, and so $d(x,y) \leq r_j$ for all $x,y \in C$.
+\\
+This shows that $C$ is closed and bounded.\qed
+\subsection*{(b)}
+For an example of a metric space where closed and bounded sets are not closed, we may take $(\R^n, \rho)$, with $\rho$ being the bounded metric on $\R^n$ induced by $||\cdot||$. Then any subset of $\R^n$ is bounded, yet clearly not necessarily compact.
+
+\section{Problem 3}
+\subsection*{(a)}
+Let $f: \R^n \to \R$ be a polynomial. Then $f$ is clearly continuous, and so the preimage of a closed set is closed under $f$. Specifically, we have
+$
+\mbox{Ker}(f) = f^{-1}(\{0\})
+$
+closed because $\{0\}$ is closed. \qed
+
+\subsection*{(b)}
+\newcommand{\SLtwo}{\mathbf{SL}(2,\R)}
+Let $\SLtwo$ denote the set of real-valued $(2\times2)$ matrices with determinant $1$, with the subspace topology of $\R^4$.
+
+That is, 
+\begin{equation}
+\SLtwo = \{(a,b,c,d) \in \R^4: ad - bc = 1\}\,.
+\end{equation}
+Consider the function $f: \R^4 \to \R$ given by
+\begin{equation}
+f(a,b,c,d) = ad - bc\,,
+\end{equation}
+Then $f$ is again clearly continuous. Hence, we have as in $(a)$,
+\begin{equation}
+f^{-1}(\{1\})
+=
+\{(a,b,c,d) \in \R^4: ad - bc = 1\}
+= \SLtwo\,,
+\end{equation}
+which shows that $\SLtwo$ is indeed closed.\qed
+\subsection*{(c)}
+For $t \neq 0$, setting $b = c = 0$ and letting $a = t, d = 1/t$ gives $ad - bc = 1$. Letting $t \to 0$ or $t \to \infty$ then forces $||(a,b,c,d)||$ to grow out of any bounds; hence $\SLtwo$ is not bounded and so cannot be compact. \qed
+
+\section{Problem 4}
+Let $X$ be a topological space. 
+\subsection*{(a)}
+To show that path-equivalence is an equivalence relation on $X$, I need to establish the three usual criteria.
+\\
+
+For reflexivity, we have for $x \in X$, $\alpha(t) = x$ for $t\in [0,1]$. Thus $x$ is path-equivalent to itself.
+\\
+
+For symmetry, assume that $x$ is path-equivalent to $y$, and let $\alpha(t)$ be the continuous map satisfying $\alpha(0) = x$, $\alpha(1) = y$.
+
+Define $\beta: [0,1] \to X$ by $\beta(t) = \alpha(1-t)$. Hence $y$ is path-equivalent to $x$.
+\\
+
+For transivity, assume that $x$ is path-equivalent to $y$ with path-map $\alpha$ and that $y$ is path-equivalent to $z$ with path-map $\beta$. Define $\gamma:[0,1] \to X$ by
+\begin{equation}
+\gamma(t) = 
+\left\{
+\begin{array}{lc}
+\alpha(2t),&0\leq t \leq 1/2\,,\\
+\beta(2t-1),&1/2<t\leq 1\,.
+\end{array}
+\right.
+\end{equation}
+Then $\gamma$ is a continuous map connecting $x$ to $z$, as was to be shown.
+\qed
+\\
+
+Henceforth, let $\pi_0(X)$ denote the set of equivalence classes of points in $X$ under path-equivalence.
+
+\subsection*{(b)}
+Let $X = \R^n$. Then $X$ is convex, and so for $x,y \in X$, the map
+$\alpha(t)
+=
+x + (y-x)t$
+satisfies the criteria. Hence $x$ and $y$ are path-equivalent for all $x,y \in X$, that is, $\pi_0(\R^n)$ consists of one element.
+
+\subsection*{(c)}
+Let $X = \R^* = \R \setminus \{0\}$. Then if $x$ and $y$ are both either positive or negative, the same map as in (b) will provide a path between $x$ and $y$, and so they are path-equivalent. 
+
+Assume $x < 0$ and $y > 0$. Assume that there exists a path $\alpha: [0,1] \to X$ connecting $x$ to $y$.
+Let $t^* = \sup\{t: \alpha(t) < 0\}$. Then either $\alpha(t^*) < 0$ or $\alpha(t^*) > 0$. In the first case, we have $\alpha^{-1}((x,0)) = (0, t^*]$ which is not open, and in the second case,
+we have
+$\alpha^{-1}((0,y)) = [t^*, 1)$, which is again not open. Hence $\alpha$ cannot be continuous, a contradiction. In conclusion, $x$ and $y$ cannot be path equivalent, and there exist exactly two partitions of $\R \setminus \{0\}$.
+
+\subsection*{(d)}
+Let $X = \R^n \setminus \{z\}$ for $n \geq 2$ and some $z\in \R^n$. Let $x,y \in X$. Then if $z$ does not lie on the line between $x$ and $y$, they are clearly path-equivalent. If $z$ does lie between $x$ and $y$, there exists some $u$, say $u = z + (1,0,0,\cdots,0)$ (replace if necessary), such that $z$ does not lie between $x$ and $u$ or between $u$ and $y$. Then $x$ is path-equivalent to $u$, and $u$ is path-equivalent to $y$--by transitivity, $x$ is path-equivalent to $y$.
+
+Hence $\pi_0(\R^n)$ consists of only one element.
+
+\subsection*{(e)}
+Note first that $\R \setminus \{0\}$ is not merely not path-connected, it is not connected, as $\R \setminus \{0\} = (-\infty,0) \cup (0,\infty)$.
+
+Assume that there exists a homeomorphism $f: \R^n \to \R$ with $f(z) = 0$ for some $z\in\R^n$. Since then $f(\R^n \setminus \{z\}) = \R \setminus \{0\}$, we have that $f$ does not preserve connectedness; hence $f$ is not a homeomorphism, which is contradictory.
+
+In conclusion, there cannot exist a homeomorphism between $\R$ and $\R^n$.
+\end{document}
